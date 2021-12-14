@@ -7,12 +7,12 @@ import { Wrapper } from "./Styles";
 
 export const $1 = () => {
     return <Wrapper>$1</Wrapper>;
-}
+};
 
 EOF
 }
 
-make_styles_file() {
+make_style_file() {
 cat > Styles.tsx << EOF
 import styled from "styled-components";
 
@@ -33,6 +33,6 @@ if [[ -d "$PWD/$component_name" ]]; then
 else
     mkdir $component_name && cd $_
     make_component_file $component_name
-    make_styles_file
+    make_style_file
     make_index_file $component_name
 fi
