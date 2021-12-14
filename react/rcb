@@ -1,0 +1,38 @@
+#!/bin/bash
+component_name=$1
+
+make_component_file() {
+cat > $1.tsx << EOF
+import { Wrapper } from "./Styles";
+
+export const $1 = () => {
+    return <Wrapper>$1</Wrapper>;
+}
+
+EOF
+}
+
+make_styles_file() {
+cat > Styles.tsx << EOF
+import styled from "styled-components";
+
+export const Wrapper = styled.div\`\`;
+
+EOF
+}
+
+make_index_file() {
+cat > index.ts << EOF
+export { $1 } from "./$1";
+
+EOF
+}
+
+if [[ -d "$PWD/$component_name" ]]; then
+    echo "Directory '$component_name' already exists!"
+else
+    mkdir $component_name && cd $_
+    make_component_file $component_name
+    make_styles_file
+    make_index_file $component_name
+fi
